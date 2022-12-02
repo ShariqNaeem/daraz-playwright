@@ -11,10 +11,11 @@ const records = parse(fs.readFileSync(path.join(__dirname, '../resources/sample.
 });
 
 for (const record of records) {
-   test(`Verify the brand href, category name, and filters for @${record.beverages_type} on the PLP page`, async ({ browser }) => {
+    test.afterEach(async ({ page }) => {
+        await page.close();
+    });
 
-        const browserContext = await browser.newContext();
-        const page = await browserContext.newPage();
+    test(`Verify the brand href, category name, and filters for @${record.beverages_type} on the PLP page`, async ({ page }) => {
 
         const homePage = new HomePage(page);
         const beveragePage = new BeveragePage(page);
